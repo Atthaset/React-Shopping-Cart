@@ -1,12 +1,13 @@
 //จัดการภาพรวมตะกร้าสินค้า
-import CartData from "../data/CartData"
+import { MyCartContext } from "../management/context"
 import CartItem from "./CartItem"
 
 const Cart = () => {
+    const {cart} = MyCartContext()
     return (
         <div className="shopping-cart">
             <div className="title">สินค้าในตะกร้า</div>
-            {CartData.map((data ) => {
+            {cart.map((data ) => {
                 return <CartItem key={data.id} {...data}/>
             })}
             <div className="footer">ยอดรวม 5 บาท</div>
