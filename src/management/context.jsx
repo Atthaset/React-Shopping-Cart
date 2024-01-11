@@ -13,12 +13,22 @@ const CartContext = createContext();
 
 export const MyCartContext = () => {
     return useContext(CartContext)
-}
+}//ใช้ MyCartContext เพื่อเรียกใช้ครั้งเดียวไม่ต้องเรียก้ทั้ง CartContext, CartProvider
 
 const CartProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, initState)
+    const [state, dispatch] = useReducer(reducer, initState)//dispatch ใช้เรียก reducer
+
+    const removeItem = (id) => {
+        console.log("Id that remove is : ", id);
+        dispatch({ type: "REMOVE_ITEM", payload: id })//ใช้ payload อ้างอิงสื่งที่ต้องการ action
+    }
+
+    const toggleQuantity = (id, type) => {
+        dispatch({ type: "TOGGLE_QUANTITY", payload: { id, type } })
+    }
+
     return (
-        <CartContext.Provider value={{ ...state }}>
+        <CartContext.Provider value={{ ...state, removeItem, toggleQuantity }}>
             {children}
         </CartContext.Provider>
     )
