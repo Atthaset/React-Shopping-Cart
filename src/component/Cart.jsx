@@ -3,7 +3,7 @@ import { MyCartContext } from "../management/context"
 import CartItem from "./CartItem"
 
 const Cart = () => {
-    const { cart, total } = MyCartContext()
+    const { cart, total, formatNumber } = MyCartContext()
     console.log("ข้อมูลใน cart : ", cart);
 
     if (cart.length === 0) {
@@ -19,7 +19,7 @@ const Cart = () => {
                 {cart.map((data) => {
                     return <CartItem key={data.id} {...data} />
                 })}
-                <div className="footer">ยอดรวม {total} บาท</div>
+                <div className="footer">ยอดรวม {formatNumber(total)} บาท</div>
             </div>
         )
     }

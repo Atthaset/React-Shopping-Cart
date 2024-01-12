@@ -29,6 +29,26 @@ const reducer = (state, action) => { // action = REMOVE_ITEM
             ...state, cart: newCart
         }
     }
+    if (action.type === "CALCULATE_TOTAL") {
+        //reduce((ตัวแปรเก็บค่าเริ่มต้น, สมาชิกแต่ล่ะตัวที่ต้องการ{state.cart}))
+        const { total, amount } = state.cart.reduce((cartTotal, item) => {
+            //ต้องการเเค่ price กับ quantity เพื่อมาคำนวน
+            const { price, quantity } = item
+            const itemTotal = price * quantity
+            //console.log(`ยอดรวมสินค้า id ที่ ${item.id} = ${itemTotal}`);
+            cartTotal.total += itemTotal
+            cartTotal.amount += quantity
+
+            return cartTotal
+        },
+            {//กำหนดค่าเริ่มต้นของ cartTotal
+                total: 0,
+                amount: 0
+            })// ก้อนนี้ต้อง return cartTotal
+        return {//retirn ค่าที่ต้องการเปลี่ยนแแปรง
+            ...state, total, amount
+        }
+    }
 }
 
 //filter id = 2 =>[1,2,3] => [1,3]
